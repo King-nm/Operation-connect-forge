@@ -1,0 +1,122 @@
+{
+  "name": "Day1-Manual Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "548c76c8-3e3f-4783-9795-dabaedee548c",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1c276c9-9fcd-4c19-9ee5-08acdb56c0e7",
+              "name": "Customer_Message",
+              "value": "How do I reset my password?",
+              "type": "string"
+            },
+            {
+              "id": "046993db-b2f9-413d-8798-fb3e24e8a7b6",
+              "name": "Customer_Email",
+              "value": "test@example.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "10f53db2-31cd-438b-a4a5-abd4412fa99f",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI",
+          "cachedResultUrl": ""
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "\nYou are a support classifier. Categorize messages as: support, sales or billing. Reply with one word only."
+            },
+            {
+              "content": "={{ $json.Customer_Message }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "88192eae-811d-4969-9b4d-adcf89e97ec6",
+      "name": "Message a model",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0nHB96zT9nhqNfx2",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "13fa4a7b-df4c-4ddd-9727-bd8bd8cbd097",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6be8441629f47a47ac70401303e62d915c53777e46578563fdb9b4964d5362bf"
+  },
+  "nodeGroups": [],
+  "id": "js3ZfIjKo2Gra34V",
+  "tags": []
+}
